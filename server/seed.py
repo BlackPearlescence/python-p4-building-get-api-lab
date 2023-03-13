@@ -19,7 +19,9 @@ with app.app_context():
     bakeries = []
     for i in range(20):
         b = Bakery(
-            name=fake.company()
+            name=fake.company(),
+            created_at=fake.date_time_this_year(),
+            updated_at=fake.date_time_this_year()
         )
         bakeries.append(b)
     
@@ -37,7 +39,9 @@ with app.app_context():
         bg = BakedGood(
             name=name,
             price=randint(1,10),
-            bakery=rc(bakeries)
+            bakery=rc(bakeries),
+            created_at=fake.date_time_this_year(),
+            updated_at=fake.date_time_this_year()
         )
 
         baked_goods.append(bg)

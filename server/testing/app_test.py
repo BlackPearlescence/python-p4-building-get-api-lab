@@ -18,10 +18,11 @@ class TestApp:
         response = app.test_client().get('/bakeries')
         assert response.content_type == 'application/json'
 
+    # Needed to add a created_at field to the Bakery record entry
     def test_bakeries_route_returns_list_of_bakery_objects(self):
         '''returns JSON representing models.Bakery objects.'''
         with app.app_context():
-            b = Bakery(name="Mr. Bakery")
+            b = Bakery(name="Mr. Bakery",created_at="2023-01-31 00:09:17")
             db.session.add(b)
             db.session.commit()
 
@@ -77,7 +78,7 @@ class TestApp:
     def test_baked_goods_by_price_returns_list_of_baked_goods(self):
         '''returns JSON representing one models.Bakery object.'''
         with app.app_context():
-            b = BakedGood(name="Madeleine", price=10)
+            b = BakedGood(name="Madeleine", price=10,created_at="2023-01-31 00:09:17")
             db.session.add(b)
             db.session.commit()
 
@@ -85,6 +86,7 @@ class TestApp:
             data = json.loads(response.data.decode())
             assert(type(data) == list)
             for record in data:
+                print(record)
                 assert(record['id'])
                 assert(record['name'])
                 assert(record['price'])
